@@ -3,7 +3,7 @@ apply plugin: 'eclipse'
 apply plugin: 'idea'
 apply plugin: 'application'
 
-mainClassName='com.omsface.learning.dropwizard.DropWizardServer'
+mainClassName='com.spacemix.api.DropWizardServer'
 
 sourceCompatibility = 1.8
 version = '1.0'

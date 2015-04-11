@@ -1,4 +1,4 @@
-package com.omsface.learning.dropwizard;
+package com.spacemix.api;
 
 import com.codahale.metrics.annotation.Timed;
 
