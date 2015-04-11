@@ -1,0 +1,77 @@
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'idea'
+apply plugin: 'application'
+
+mainClassName='com.omsface.learning.dropwizard.DropWizardServer'
+
+sourceCompatibility = 1.8
+version = '1.0'
+
+repositories {
+    mavenCentral()
+}
+
+defaultTasks 'run'
+
+dependencies {
+
+    compile 'org.apache.commons:commons-compress:1.9'
+
+    compile 'org.apache.poi:poi:3.10-FINAL'
+    compile 'org.apache.poi:poi-ooxml:3.10-FINAL'
+    compile "com.goldmansachs:gs-collections-api:5.0.0"
+    compile "com.goldmansachs:gs-collections:5.0.0"
+    compile "com.goldmansachs:gs-collections-forkjoin:5.0.0"
+
+    compile "joda-time:joda-time:2.6"
+
+//    compile "com.github.spullara.mustache.java:compiler:0.8.14"
+    compile "com.github.spullara.mustache.java:compiler:0.8.17"
+    compile 'org.apache.commons:commons-lang3:3.3.2'
+    compile 'commons-io:commons-io:2.4'
+    compile 'ch.qos.logback:logback-classic:1.1.2'
+
+    compile 'com.fasterxml.jackson:jackson-parent:2.4.1'
+    compile 'com.fasterxml.jackson.core:jackson-databind:2.4.1'
+
+    compile 'io.dropwizard:dropwizard-core:0.7.0'
+    compile 'org.eclipse.jgit:org.eclipse.jgit:3.5.2.201411120430-r'
+
+    testCompile "com.goldmansachs:gs-collections-testutils:5.0.0"
+    testCompile group: 'junit', name: 'junit', version: '4.11'
+}
+
+//gradle.bat run -PappArgs="['server']"
+run {
+    if ( project.hasProperty("appArgs") ) {
+        args Eval.me(appArgs)
+    }
+}
+
+sourceSets
+        {
+            main
+                    {
+                        java
+                                { srcDir 'src/main/java' }
+                        resources
+                                {
+                                    srcDir 'src/main/resources'
+                                    srcDir 'src/main/config'
+                                }
+                    }
+            test
+                    {
+                        java
+                                { srcDir 'src/test/java' }
+                    }
+
+            [sourceSets.main.java.srcDirs
+                     + sourceSets.main.resources.srcDirs
+                     + sourceSets.test.java.srcDirs
+                     + sourceSets.test.resources.srcDirs].each {
+                it.each { new File(it.toString()).mkdirs() }
+            }
+        }
+
